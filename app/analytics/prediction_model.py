@@ -1,5 +1,6 @@
 import app.data.data_parser as dp
 from sklearn.externals import joblib
+import a
 
 subjects = ["Art","Citizenship_Education","English","Geography","Health","History","Mathematics","PTS","Religion","Science","Sinhala","Tamil"]
 
@@ -11,7 +12,7 @@ def get_prediction(df):
     
     for subject in subjects:
 
-        df = dp.generate_dataset (df,[subject])
+        df = dp.generate_dataset(df,[subject])
         
         return {
             "Sinhala": get_prediction_marks(df,subject),
