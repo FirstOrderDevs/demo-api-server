@@ -19,7 +19,7 @@ def get_prediction_marks(df1, df2, subject):
     if predict_mark > high_thresold:
         predict_mark = high_thresold
         
-    if predict_mark < low_thresold
+    if predict_mark < low_thresold:
         predict_mark = low_thresold
     
     if(xgb_regressor.predict(df1)>thresold):
