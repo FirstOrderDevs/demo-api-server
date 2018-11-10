@@ -8,7 +8,7 @@ subjects = ["Mathematics", "Art", "Science", "Sinhala", "Citizenship_Education",
 def get_prediction_marks(df1, df2, subject):
     xgb_regressor = joblib.load('app/analytics/joblibs/xgb/' + subject + '_xgb.joblib')
     adb_classifier = joblib.load('app/analytics/joblibs/adb_clf/' + subject + '_adb.joblib')
-    rnd_classifier = joblib.load('app/analytics/joblibs/adb_clf/' + subject + '_rnd.joblib')
+    rnd_classifier = joblib.load('app/analytics/joblibs/rnd_clf/' + subject + '_rnd.joblib')
     
     thresold = 55
     

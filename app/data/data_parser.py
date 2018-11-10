@@ -19,8 +19,6 @@ def get_marks(df, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8]):
         for term in terms:
             columns.append((subject + "_" + str(term)).rstrip())
 
-    print('=========', subject, columns)
-
     df = df[columns]
 
     return df
@@ -49,7 +47,7 @@ def put_missing_values(dataframe):
     return dataframe
 
 
-def discretize_marks(dataframe, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
+def discretize_marks(dataframe, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8]):
     dataframe = dataframe.apply(pd.to_numeric, errors='ignore')
 
     columns = []
@@ -85,7 +83,7 @@ def generate_dataset(df, subjects, discretize='no'):
     if discretize == 'no':
         df_marks = get_marks(df, subjects)
     else:
-        df_marks = discretize_marks(get_marks(subjects), subjects)
+        df_marks = discretize_marks(get_marks(df, subjects), subjects)
     df_demo = get_demographics(df)
     df_lci = get_lci(df)
 
