@@ -11,11 +11,21 @@ def get_prediction_marks(df1, df2, subject):
     rnd_classifier = joblib.load('app/analytics/joblibs/rnd_clf/' + subject + '_rnd.joblib')
     
     thresold = 55
+    high_thresold = 97
+    low_thresold = 9
+    
+    predict_mark = xgb_regressor.predict(df1)
+        
+    if predict_mark > high_thresold:
+        predict_mark = high_thresold
+        
+    if predict_mark < low_thresold
+        predict_mark = low_thresold
     
     if(xgb_regressor.predict(df1)>thresold):
-        return (xgb_regressor.predict(df1),rnd_classifier.predict(df2))
+        return (predict_mark,rnd_classifier.predict(df2))
     else:
-        return (xgb_regressor.predict(df1),adb_classifier.predict(df2))
+        return (predict_mark,adb_classifier.predict(df2))
 
 
 def get_prediction(df):
