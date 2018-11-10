@@ -50,9 +50,9 @@ def run_analysis(body):
     user = User.objects.get(id=body['id']).to_mongo()['row_data']
     df_dict = {}
     for key, value in user.items():
-        df_dict[key] = [value]
+        df_dict[key.rstrip()] = [value]
     
     df = pd.DataFrame.from_dict(df_dict)
-
+    print(df.columns)
     data = pm.get_prediction(df)
     print(data)

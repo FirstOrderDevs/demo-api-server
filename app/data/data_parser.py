@@ -1,7 +1,7 @@
 import pandas as pd
-import app.data.ScoreCalculator as sc
+import app.data.score_calculator as sc
 
-def get_marks(df, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
+def get_marks(df, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8]):
     """
     Returns a data frame with marks for given subjects and terms for given schools
 
@@ -17,7 +17,9 @@ def get_marks(df, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
     for subject in subjects:
 
         for term in terms:
-            columns.append(subject + "_" + str(term))
+            columns.append((subject + "_" + str(term)).rstrip())
+
+    print('=========', subject, columns)
 
     df = df[columns]
 
@@ -62,13 +64,13 @@ def discretize_marks(dataframe, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
         for val in marks:
             if val >= 75:
                 grades.append(1)
-            elif (val < 75 and val >= 65):
+            elif 75 > val >= 65:
                 grades.append(2)
-            elif (val < 65 and val >= 55):
+            elif 65 > val >= 55:
                 grades.append(3)
-            elif (val < 55 and val >= 40):
+            elif 55 > val >= 40:
                 grades.append(4)
-            elif (val < 40 and val >= 0):
+            elif 40 > val >= 0:
                 grades.append(5)
             else:
                 grades.append(-1)
@@ -76,11 +78,11 @@ def discretize_marks(dataframe, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
         grade_series = pd.Series(grades)
         dataframe[column] = grade_series
 
-    return dataframe;
+    return dataframe
 
 
 def generate_dataset(df, subjects, discretize='no'):
-    if (discretize == 'no'):
+    if discretize == 'no':
         df_marks = get_marks(df, subjects)
     else:
         df_marks = discretize_marks(get_marks(subjects), subjects)
@@ -99,7 +101,7 @@ def generate_dataset(df, subjects, discretize='no'):
 
     sibiling_score = sc.getSibilingEducationScore(df)
     sibiling_score_series = pd.Series(sibiling_score)
-    df["s_edu"] = sibiling_score_series;
+    df["s_edu"] = sibiling_score_series
 
     df = df.apply(pd.to_numeric, errors='ignore')
 
