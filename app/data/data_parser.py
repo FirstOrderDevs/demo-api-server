@@ -1,9 +1,5 @@
 import pandas as pd
-import data.ScoreCalculator as sc
-import data.MongoDAO as md
-from sklearn.preprocessing import Imputer
-import os
-
+import app.data.ScoreCalculator as sc
 
 def get_marks(df, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
     """
@@ -21,7 +17,7 @@ def get_marks(df, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
     for subject in subjects:
 
         for term in terms:
-            columns.append(subject + "_" + str(term));
+            columns.append(subject + "_" + str(term))
 
     df = df[columns]
 
@@ -58,7 +54,7 @@ def discretize_marks(dataframe, subjects, terms=[1, 2, 3, 4, 5, 6, 7, 8, 9]):
 
     for subject in subjects:
         for term in terms:
-            columns.append(subject + "_" + str(term));
+            columns.append(subject + "_" + str(term))
 
     for column in columns:
         grades = []
@@ -96,13 +92,13 @@ def generate_dataset(df, subjects, discretize='no'):
     df = put_missing_values(df_join)  # replace missing values with -1
 
     for subject in subjects:
-        tution_score = sc.getTutionScore(df, subject);
-        tution_score_series = pd.Series(tution_score);
-        df[subject + "_tution"] = tution_score_series;
+        tution_score = sc.getTutionScore(df, subject)
+        tution_score_series = pd.Series(tution_score)
+        df[subject + "_tution"] = tution_score_series
     df = df.drop('tution', axis=1)
 
-    sibiling_score = sc.getSibilingEducationScore(df);
-    sibiling_score_series = pd.Series(sibiling_score);
+    sibiling_score = sc.getSibilingEducationScore(df)
+    sibiling_score_series = pd.Series(sibiling_score)
     df["s_edu"] = sibiling_score_series;
 
     df = df.apply(pd.to_numeric, errors='ignore')
@@ -124,15 +120,15 @@ def generate_dataset_orange(subject, tution_score="no", discretize='no'):
                 "tution", ]
 
     for i in range(1, 21):
-        features.append("Lci_" + str(i));
+        features.append("Lci_" + str(i))
 
     df = get_all()[features];
     df = handle_missing_values(df, '?');
-    df = handle_missing_values(df, '?', is_nan=True);
+    df = handle_missing_values(df, '?', is_nan=True)
 
     if (tution_score == "yes"):
-        tution_score = sc.getTutionScore(df, subject);
-        tution_score_series = pd.Series(tution_score);
+        tution_score = sc.getTutionScore(df, subject)
+        tution_score_series = pd.Series(tution_score)
         df["tution"] = tution_score_series;
 
     else:
@@ -140,9 +136,9 @@ def generate_dataset_orange(subject, tution_score="no", discretize='no'):
         tution_category_series = pd.Series(tution_category)
         df["tution"] = tution_category_series
 
-    sibiling_score = sc.getSibilingEducationScore(df);
-    sibiling_score_series = pd.Series(sibiling_score);
-    df["s_edu"] = sibiling_score_series;
+    sibiling_score = sc.getSibilingEducationScore(df)
+    sibiling_score_series = pd.Series(sibiling_score)
+    df["s_edu"] = sibiling_score_series
 
     if (discretize == 'yes'):
         df = discretize_marks(df, subject)
