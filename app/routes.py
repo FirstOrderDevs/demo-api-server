@@ -27,3 +27,9 @@ def login_user():
 @app.route('/api/user/data/update', methods=['POST'])
 def update_data():
     return dumps(user_model.update_data(json.loads(request.data)))
+
+
+@app.route('/api/user/data/analytics', methods=['POST'])
+def run_analysis():
+    user_model.run_analysis(json.loads(request.data))
+    return "OK"

@@ -1,9 +1,10 @@
 from mongoengine import *
 import json
+import pandas as pd
 
 import app.database as db
 import app.users.RowData as row_data
-
+import app.analytics.prediction_model as pm
 db.init()
 
 
@@ -44,3 +45,15 @@ def update_data(body):
     newuser = user.save()
     return {'success': True, 'newUser': json.loads(newuser.to_json())}
     
+
+def run_analysis(body):
+    user = User.objects.get(id=body['id']).to_mongo()['row_data']
+    df_dict = {}
+    for key, value in user.items():
+        df_dict[key] = [value]
+    
+    print(df_dict)
+    df = pd.DataFrame.from_dict(df_dict)
+    print(df)
+
+    data = pm.get_prediction(df)
