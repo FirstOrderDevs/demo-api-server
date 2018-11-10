@@ -5,15 +5,24 @@ subjects = ["Mathematics", "Art", "Science", "Sinhala", "Citizenship_Education",
             "Religion"]
 
 
-def get_prediction_marks(df, subject):
+def get_prediction_marks(df1, df2, subject):
     xgb_regressor = joblib.load('app/analytics/joblibs/xgb/' + subject + '_xgb.joblib')
-    return xgb_regressor.predict(df)
+    adb_classifier = joblib.load('app/analytics/joblibs/adb_clf/' + subject + '_adb.joblib')
+    rnd_classifier = joblib.load('app/analytics/joblibs/adb_clf/' + subject + '_rnd.joblib')
+    
+    thresold = 55
+    
+    if(xgb_regressor.predict(df1)>thresold):
+        return (xgb_regressor.predict(df1),rnd_classifier.predict(df2))
+    else:
+        return (xgb_regressor.predict(df1),adb_classifier.predict(df2))
 
 
 def get_prediction(df):
     dict = {}
     for subject in subjects:
         df1 = dp.generate_dataset(df, [subject])
-        dict[subject] = get_prediction_marks(df1, subject)
+        df2 = dp.generate_dataset(df, [subject], discretize='yes')
+        dict[subject] = get_prediction_marks(df1,df2,subject)
 
     return dict
