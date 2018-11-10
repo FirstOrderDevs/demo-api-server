@@ -43,3 +43,4 @@ def update_data(body):
         user.row_data[key] = str(value)
     newuser = user.save()
     return {'success': True, 'newUser': json.loads(newuser.to_json())}
+    
