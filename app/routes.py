@@ -9,7 +9,7 @@ from flask import request
 @app.route('/')
 @app.route('/index')
 def index():
-    return "Hello, World!"
+    return "Hi, Hello world..!"
 
 
 @app.route('/api/user/create', methods=['POST'])

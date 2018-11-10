@@ -52,8 +52,7 @@ def run_analysis(body):
     for key, value in user.items():
         df_dict[key] = [value]
     
-    print(df_dict)
     df = pd.DataFrame.from_dict(df_dict)
-    print(df)
 
     data = pm.get_prediction(df)
+    print(data)
