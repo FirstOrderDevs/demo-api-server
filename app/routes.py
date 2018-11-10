@@ -31,5 +31,4 @@ def update_data():
 
 @app.route('/api/user/data/analytics', methods=['POST'])
 def run_analysis():
-    user_model.run_analysis(json.loads(request.data))
-    return "OK"
+    return user_model.run_analysis(json.loads(request.data))
