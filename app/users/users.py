@@ -20,7 +20,7 @@ class User(Document):
 
 def create_user(user):
     # try:
-        user = User(user['username'], user['email'], '', user['password'], user['type']).save()
+        user = User(user['username'], user['email'], user['name'], user['password'], user['type']).save()
         return {'success': True, 'user': json.loads(user.to_json())}
     # except Exception:
     #     return {'success': False}
