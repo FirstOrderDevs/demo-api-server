@@ -31,4 +31,8 @@ def update_data():
 
 @app.route('/api/user/data/analytics', methods=['POST'])
 def run_analysis():
-    return user_model.run_analysis(json.loads(request.data))
+    return dumps(user_model.run_analysis(json.loads(request.data)))
+
+@app.route('/api/user/teacher/getdata', methods=['GET'])
+def get_teacher_data():
+    return dumps(user_model.get_teacher_data())

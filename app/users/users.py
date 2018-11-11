@@ -58,7 +58,11 @@ def run_analysis(body):
     df = pd.DataFrame.from_dict(df_dict)
     # print(df.columns)
     data = pm.get_prediction(df)
-    data_dict = {}
+    print(data)
+    data_dict = {
+        'learningStyle': str(data['learning_style'])
+    }
+    del data['learning_style']
     for key, value in data.items():
         data_dict[key + '_mark'] = str(int(round(value[0])))
         data_dict[key + '_grade'] = 'A' if value[1][0] == 1 else (
@@ -67,3 +71,7 @@ def run_analysis(body):
     newUser = user.save()
     return {'success': True, 'newUser': json.loads(newUser.to_json())}
     # user.predicted =
+
+def get_teacher_data():
+    users = User.objects.exclude('row_data', 'password')
+    return {'success': True, 'students': json.loads(users.to_json())}
