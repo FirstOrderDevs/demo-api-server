@@ -71,5 +71,5 @@ def run_analysis(body):
     # user.predicted =
 
 def get_teacher_data():
-    users = User.objects.exclude('row_data', 'password')
+    users = User.objects().exclude('password')
     return {'success': True, 'students': json.loads(users.to_json())}

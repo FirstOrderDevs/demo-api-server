@@ -3,13 +3,13 @@ import json
 import app.users.users as user_model
 
 from bson.json_util import dumps
-from flask import request
+from flask import request, send_from_directory
 
 
-@app.route('/')
-@app.route('/index')
-def index():
-    return "Hi, Hello world..!"
+# @app.route('/')
+# @app.route('/index')
+# def index():
+#     return "Hi, Hello world..!"
 
 
 @app.route('/api/user/create', methods=['POST'])
@@ -36,3 +36,7 @@ def run_analysis():
 @app.route('/api/user/teacher/getdata', methods=['GET'])
 def get_teacher_data():
     return dumps(user_model.get_teacher_data())
+
+@app.route('/')
+def send_index():
+    return send_from_directory('app/public/', 'index.html')
